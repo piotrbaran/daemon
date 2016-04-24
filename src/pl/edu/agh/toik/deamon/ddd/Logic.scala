@@ -1,7 +1,5 @@
 package pl.edu.agh.toik.deamon.ddd
 
-import com.sun.xml.internal.bind.v2.TODO
-
 object Logic extends LogicComponent with TriggerChecker {
 
   val daemons: List[GamePricesFetcher] = List()
