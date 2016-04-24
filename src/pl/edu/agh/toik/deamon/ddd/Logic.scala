@@ -1,6 +1,8 @@
 package pl.edu.agh.toik.deamon.ddd
 
-object Logic extends TriggerChecker {
+import com.sun.xml.internal.bind.v2.TODO
+
+object Logic extends LogicComponent with TriggerChecker {
 
   val daemons: List[GamePricesFetcher] = List()
   val triggers  = scala.collection.mutable.Map[String,PriceTrigger]()
@@ -29,10 +31,29 @@ object Logic extends TriggerChecker {
     triggers.remove(key)
   }
 
-  def checkTriggers(): Unit ={
-      for (trigger <- triggers.values){
-        println(trigger.isPriceBelowMinimal())
+  def refreshManually(userId : Int): Unit ={
+    for (daemon <- daemons){
+      if (userId == daemon._userId){
+        daemon.obtainCurentState()
+        daemon.activateTriggers()
       }
+    }
+  }
+
+  def checkTriggers(userId : Int): Unit ={
+      for (trigger <- triggers.values){
+        if (userId == trigger._userId){
+          if (trigger.isPriceBelowMinimal()){
+            notify(userId, trigger._gameName, trigger._maxPrice, 123)
+            //TODO : figure out a nice way of getting current price of game in this class
+          }
+        }
+      }
+  }
+
+
+  def notify(userId : Int, gameName : String, maxPrice : Double, currentPrice : Double): Unit ={
+    //notification logic
   }
 
 }
