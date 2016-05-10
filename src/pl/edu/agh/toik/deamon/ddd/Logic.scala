@@ -7,29 +7,29 @@ object Logic extends LogicComponent with TriggerChecker {
 
   def main(args: Array[String]) {
     println("Hello, world!")
-    createGamePricesFetcher(1, 4000)
-    createPriceTrigger(1, "Witcher 3", 70)
+    createGamePricesFetcher("a@b", 4000)
+    createPriceTrigger("a@b", "Witcher 3", 70)
   }
 
-  def createGamePricesFetcher(userId : Int, refreshingTime : Int){
+  def createGamePricesFetcher(userId : String, refreshingTime : Int){
     val daemon = new GamePricesFetcher(userId, refreshingTime, this)
     val thread = new Thread(daemon).start
     daemons :+ daemon
   }
 
-  def createPriceTrigger(userId : Int, gameName : String, maxPrice : Double): Unit ={
+  def createPriceTrigger(userId : String, gameName : String, maxPrice : Double): Unit ={
     val trigger = new PriceTrigger(userId, gameName, maxPrice)
     val key = userId + "#" + gameName + "#" + maxPrice + "#"
     triggers(key) = trigger
 
   }
 
-  def deletePriceTrigger(userId : Int, gameName : String, maxPrice : Double): Unit ={
+  def deletePriceTrigger(userId : String, gameName : String, maxPrice : Double): Unit ={
     val key = userId + "#" + gameName + "#" + maxPrice + "#"
     triggers.remove(key)
   }
 
-  def refreshManually(userId : Int): Unit ={
+  def refreshManually(userId : String): Unit ={
     for (daemon <- daemons){
       if (userId == daemon._userId){
         daemon.obtainCurentState()
@@ -38,7 +38,7 @@ object Logic extends LogicComponent with TriggerChecker {
     }
   }
 
-  def checkTriggers(userId : Int): Unit ={
+  def checkTriggers(userId : String): Unit ={
       for (trigger <- triggers.values){
         if (userId == trigger._userId){
           if (trigger.isPriceBelowMinimal()){
@@ -50,7 +50,7 @@ object Logic extends LogicComponent with TriggerChecker {
   }
 
 
-  def notify(userId : Int, gameName : String, maxPrice : Double, currentPrice : Double): Unit ={
+  def notify(userId : String, gameName : String, maxPrice : Double, currentPrice : Double): Unit ={
     //notification logic
   }
 

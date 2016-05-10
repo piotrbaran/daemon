@@ -1,11 +1,13 @@
 package pl.edu.agh.toik.deamon.ddd
 
+
+
 /**
   * Created by Piotr on 2016-04-24.
   */
-class GamePricesFetcher(userId : Int, sleepTime : Int, checker : TriggerChecker) extends Runnable {
+class GamePricesFetcher(userId : String, sleepTime : Int, checker : TriggerChecker) extends Runnable {
 
-  var _userId : Int = userId;
+  var _userId : String = userId;
 
   def run(){
     while (true){

@@ -5,9 +5,9 @@ package pl.edu.agh.toik.deamon.ddd
   */
 trait LogicComponent {
 
-  def createGamePricesFetcher(userId : Int, refreshingTime : Int)
-  def createPriceTrigger(userId : Int, gameName : String, maxPrice : Double)
-  def deletePriceTrigger(userId : Int, gameName : String, maxPrice : Double)
-  def refreshManually(userId : Int)
+  def createGamePricesFetcher(userId : String, refreshingTime : Int)
+  def createPriceTrigger(userId : String, gameName : String, maxPrice : Double)
+  def deletePriceTrigger(userId : String, gameName : String, maxPrice : Double)
+  def refreshManually(userId : String)
 
 }

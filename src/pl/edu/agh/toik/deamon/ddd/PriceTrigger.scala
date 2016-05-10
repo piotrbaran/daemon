@@ -1,8 +1,8 @@
 package pl.edu.agh.toik.deamon.ddd
 
-class PriceTrigger(userId : Int, gameName : String, maxPrice : Double) {
+class PriceTrigger(userId : String, gameName : String, maxPrice : Double) {
 
-  var _userId : Int = userId
+  var _userId : String = userId
 
   var _gameName : String = gameName
 
@@ -10,12 +10,7 @@ class PriceTrigger(userId : Int, gameName : String, maxPrice : Double) {
 
   def isPriceBelowMinimal() : Boolean = {
     //fetch data from database
-    val currentPrice = getCurrentPriceFromDatabase()
-    if (currentPrice < maxPrice){
-      return true
-    } else {
-      return false
-    }
+    return getCurrentPriceFromDatabase()< maxPrice
   }
 
   def getCurrentPriceFromDatabase(): Double ={
